@@ -1,6 +1,7 @@
 package com.uce.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Persona implements Serializable {
     private String usuario;
@@ -10,12 +11,15 @@ public class Persona implements Serializable {
     private String email;
     private String celular;
     private String genero;
+    private String fecha;
+    private String beca;
+    private List<String> asignaturas;
 
     public Persona(){
 
     }
 
-    public Persona(String usuario, String clave, String nombre, String apellido, String email, String celular, String genero) {
+    public Persona(String usuario, String clave, String nombre, String apellido, String email, String celular, String genero, String fecha, String beca, List<String> asignaturas) {
         this.usuario = usuario;
         this.clave = clave;
         this.nombre = nombre;
@@ -23,6 +27,9 @@ public class Persona implements Serializable {
         this.email = email;
         this.celular = celular;
         this.genero = genero;
+        this.fecha = fecha;
+        this.beca = beca;
+        this.asignaturas = asignaturas;
     }
 
     public String getUsuario() {
@@ -81,15 +88,39 @@ public class Persona implements Serializable {
         this.genero = genero;
     }
 
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getBeca() {
+        return beca;
+    }
+
+    public void setBeca(String beca) {
+        this.beca = beca;
+    }
+
+    public List<String> getAsignaturas() {
+        return asignaturas;
+    }
+
+    public void setAsignaturas(List<String> asignaturas) {
+        this.asignaturas = asignaturas;
+    }
+
     @Override
     public String toString() {
-        return "usuario='" + usuario + '\'' +
-                ", clave='" + clave + '\'' +
-                ", nombre='" + nombre + '\'' +
-                ", apellido='" + apellido + '\'' +
-                ", email='" + email + '\'' +
-                ", celular='" + celular + '\'' +
-                ", genero='" + genero + '\'' +
-                ';';
+        return "Usuario=" + usuario +
+                ", Nombre=" + nombre +
+                ", Apellido=" + apellido +
+                ", Email=" + email +
+                ", Celular=" + celular +
+                ", Genero=" + genero +
+                ", Fecha=" + fecha +
+                ", Beca=" + beca ;
     }
 }

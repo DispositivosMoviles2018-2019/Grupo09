@@ -1,6 +1,7 @@
 package com.uce.tarea_04_g09;
 
 import android.content.Intent;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import com.uce.entity.Persona;
 import com.uce.utils.IOStream;
+import com.uce.utils.MyDatePicker;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,21 +64,29 @@ public class MainActivity extends AppCompatActivity {
         List<Persona> lista = new ArrayList<>();
         IOStream io = new IOStream();
         lista = io.listarTodos();
+        boolean bandera=false;
         for (Persona per: lista) {
             System.out.println("Usuario: "+per.getUsuario());
             System.out.println("Clave: "+per.getClave());
             System.out.println("Nombre: "+per.getNombre());
+            System.out.println("Fecha: "+per.getFecha());
+            System.out.println("Genero: "+per.getGenero());
+            System.out.println("Beca: "+per.getBeca());
+            System.out.println("Materias Asignadas: "+per.getAsignaturas().size());
             if(user.equals(per.getUsuario()) && pass.equals(per.getClave())) {
-                Intent intent = new Intent(MainActivity.this, ListadoActivity.class);
-                startActivity(intent);
-            } else {
-                Toast.makeText(this, "Usuario y Clave no válido", Toast.LENGTH_SHORT);
+               bandera=true;
             }
+        }
+        if(bandera){
+            Intent intent = new Intent(MainActivity.this, ListadoActivity.class);
+            startActivity(intent);
+        }else{
+            Toast.makeText(this, "Usuario y Clave no válido", Toast.LENGTH_SHORT).show();
         }
 
 
-
-
     }
+
+
 
 }
