@@ -113,8 +113,6 @@ public class RegistroActivity extends AppCompatActivity {
             sb.append(fecha.getYear()).append("/").append(fecha.getMonth()).append("/").append(fecha.getDayOfMonth());
            FileOutputStream out = new FileOutputStream(dataFile, true);
            ObjectOutputStream ost = new ObjectOutputStream(out);
-
-           //MiObjectOutputStream ost = new MiObjectOutputStream(out);
            ost.writeObject(new Persona(usuario.getText().toString(), clave.getText().toString(),
                    nombre.getText().toString(), apellido.getText().toString(), email.getText().toString(),
                    celular.getText().toString(),genero, sb.toString(), beca, materias));
