@@ -1,6 +1,7 @@
 package com.uce.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 public class Persona implements Serializable {
@@ -10,16 +11,16 @@ public class Persona implements Serializable {
     private String apellido;
     private String email;
     private String celular;
-    private String genero;
-    private String fecha;
-    private String beca;
+    private int genero;
+    private Date fecha;
+    private boolean beca;
     private List<String> asignaturas;
 
     public Persona(){
 
     }
 
-    public Persona(String usuario, String clave, String nombre, String apellido, String email, String celular, String genero, String fecha, String beca, List<String> asignaturas) {
+    public Persona(String usuario, String clave, String nombre, String apellido, String email, String celular, int genero, Date fecha, boolean beca, List<String> asignaturas) {
         this.usuario = usuario;
         this.clave = clave;
         this.nombre = nombre;
@@ -80,27 +81,27 @@ public class Persona implements Serializable {
         this.celular = celular;
     }
 
-    public String getGenero() {
+    public int getGenero() {
         return genero;
     }
 
-    public void setGenero(String genero) {
+    public void setGenero(int genero) {
         this.genero = genero;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
-    public String getBeca() {
+    public boolean getBeca() {
         return beca;
     }
 
-    public void setBeca(String beca) {
+    public void setBeca(boolean beca) {
         this.beca = beca;
     }
 

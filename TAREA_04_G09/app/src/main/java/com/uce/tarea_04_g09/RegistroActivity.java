@@ -3,6 +3,7 @@ package com.uce.tarea_04_g09;
 import android.content.Intent;
 import android.os.Environment;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.uce.entity.Persona;
 import com.uce.utils.MyDatePicker;
@@ -21,8 +23,13 @@ import com.uce.utils.MyDatePicker;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegistroActivity extends AppCompatActivity {
     private EditText usuario;
@@ -72,62 +79,113 @@ public class RegistroActivity extends AppCompatActivity {
         registro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registrar();
+                //validacion numero
+                String num = celular.getText().toString();
+                String nCelular = "null";
+                String ema = email.getText().toString();
+                String nEmail = "null";
+                if (isNumberValid(num) && isEmailValid(ema)) {
+                    nCelular = num;
+                    nEmail = ema;
+                    registrar();
+                }
             }
         });
     }
 
-    private void registrar(){
+    private void registrar() {
 
-       try{
-           List<String> materias = new ArrayList<>();
-           if(checkSociales.isChecked() ){
-               materias.add("Sociales");
-           }
-           if(checkMineria.isChecked()){
-               materias.add("Mineria");
-           }
-           if(checkGestion.isChecked()){
-               materias.add("Gestion");
-           }
-           if(checkDistribuida.isChecked()){
-               materias.add("Distribuida");
-           }
-           if(checkMatematica.isChecked()){
-               materias.add("Matematica");
-           }
-           String genero=null;
-           String beca=null;
-           if(swBeca.isChecked()){
-               beca="si";
-           }else{
-               beca="no";
-           }
-            if(radioMasculino.isChecked()){
-                genero="Masculino";
-            }else{
-                genero = "Femenino";
+        try {
+            List<String> materias = new ArrayList<>();
+            if (checkSociales.isChecked()) {
+                materias.add("Sociales");
+            }
+            if (checkMineria.isChecked()) {
+                materias.add("Mineria");
+            }
+            if (checkGestion.isChecked()) {
+                materias.add("Gestion");
+            }
+            if (checkDistribuida.isChecked()) {
+                materias.add("Distribuida");
+            }
+            if (checkMatematica.isChecked()) {
+                materias.add("Matematica");
+            }
+            int genero = 0;
+            boolean beca = false;
+            if (swBeca.isChecked()) {
+                beca = true;
+            }
+            if (radioMasculino.isChecked()) {
+                genero = 1;
+            } else {
+                genero = 0;
             }
 
-            StringBuilder sb = new StringBuilder();
-            sb.append(fecha.getYear()).append("/").append(fecha.getMonth()).append("/").append(fecha.getDayOfMonth());
-           FileOutputStream out = new FileOutputStream(dataFile, true);
-           ObjectOutputStream ost = new ObjectOutputStream(out);
-           ost.writeObject(new Persona(usuario.getText().toString(), clave.getText().toString(),
-                   nombre.getText().toString(), apellido.getText().toString(), email.getText().toString(),
-                   celular.getText().toString(),genero, sb.toString(), beca, materias));
-           ost.close();
-           Intent intent = new Intent(RegistroActivity.this, MainActivity.class);
-           startActivity(intent);
-           //System.out.println("Escrito Correctamente");
-       }catch (Exception e){
+            Date date = new Date(fecha.getYear(), fecha.getMonth(), fecha.getDayOfMonth());
+            FileOutputStream out = new FileOutputStream(dataFile, true);
+            ObjectOutputStream ost = new ObjectOutputStream(out);
+            ost.writeObject(new Persona(usuario.getText().toString(), clave.getText().toString(),
+                    nombre.getText().toString(), apellido.getText().toString(), email.getText().toString(),
+                    celular.getText().toString(), genero, date, beca, materias));
+            ost.close();
+            Intent intent = new Intent(RegistroActivity.this, MainActivity.class);
+            startActivity(intent);
+            //System.out.println("Escrito Correctamente");
+        } catch (Exception e) {
             e.printStackTrace();
-       }
+        }
     }
 
-    public void showDatePicker(View view){
+    public void showDatePicker(View view) {
         DialogFragment newFragment = new MyDatePicker();
         newFragment.show(getSupportFragmentManager(), "date picker");
     }
+
+    //validacion del Email
+    public boolean isEmailValid(String email) {
+        boolean isValid = false;
+
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        CharSequence inputStr = email;
+
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+        if (matcher.matches()) {
+            isValid = true;
+        } else {
+            AlertDialog.Builder dlg = new AlertDialog.Builder(this);
+            dlg.setTitle("aviso");
+            dlg.setMessage("campo email invalido");
+            dlg.setNeutralButton("ok", null);
+            dlg.show();
+            getApplicationContext();
+        }
+        return isValid;
+    }
+
+    //validacion celular
+    public boolean isNumberValid(String cel) {
+        boolean isValid = false;
+        String expresionNumeros = "^[0-9]{10}$";
+        CharSequence inputStr = cel;
+
+        Pattern patt = Pattern.compile(expresionNumeros, Pattern.CASE_INSENSITIVE);
+        Matcher match = patt.matcher(inputStr);
+        if (match.matches()) {
+            isValid = true;
+        } else {
+            AlertDialog.Builder dlg = new AlertDialog.Builder(this);
+            dlg.setTitle("aviso");
+            dlg.setMessage("campos celular invalido");
+            dlg.setNeutralButton("ok", null);
+            dlg.show();
+            getApplicationContext();
+
+        }
+        return isValid;
+    }
+
 
 }

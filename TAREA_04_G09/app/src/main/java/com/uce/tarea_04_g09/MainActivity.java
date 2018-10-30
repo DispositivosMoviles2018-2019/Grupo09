@@ -4,9 +4,13 @@ import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.uce.entity.Persona;
@@ -17,12 +21,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     private EditText usuario;
     private EditText clave;
     private Button ingreso;
     private Button registro;
+    private Button opciones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         clave = (EditText) findViewById(R.id.pswClaveMain);
         ingreso = (Button) findViewById(R.id.btnIngresar);
         registro = (Button) findViewById(R.id.btnRegistro);
+        opciones = findViewById(R.id.btnPopUp);
 
         ingreso.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,12 +58,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        registerForContextMenu(opciones);
+
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_context,menu);
     }
 
     private void irRegistro() {
         Intent intent = new Intent(MainActivity.this, RegistroActivity.class);
         startActivity(intent);
     }
+
+
 
     private void irListado(String user, String pass) throws IOException, ClassNotFoundException {
         System.out.println("Usuario: "+ user +"- clave: " + pass);
@@ -87,6 +104,31 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void mostrarPopUp (View v) {
+        PopupMenu popUp = new PopupMenu(this, v);
+        popUp.setOnMenuItemClickListener(this);
+        popUp.inflate(R.menu.menu_popup);
+        popUp.show();
+    }
 
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
 
+        switch (item.getItemId()) {
+            case R.id.itemInicio:
+                try{
+                    irListado(usuario.getText().toString(), clave.getText().toString());
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+                return true;
+
+            case R.id.itemRegistro:
+                irRegistro();
+                return true;
+        }
+
+        return false;
+    }
 }
