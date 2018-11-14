@@ -1,5 +1,5 @@
 # Grupo09
-Integrantes:
-Larenas Daniel
-Lascano Ricardo
+Integrantes:<br/>
+Larenas Daniel <br/>
+Lascano Ricardo<br/>
 Montalvo Oscar
