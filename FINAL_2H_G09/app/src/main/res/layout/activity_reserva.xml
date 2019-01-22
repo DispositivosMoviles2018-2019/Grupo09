@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ReservaActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/txtResPlaca"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Placa" />
+
+        <EditText
+            android:id="@+id/txtResMail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Correo"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/txtResCelular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Celular"
+            android:inputType="number" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha de Préstamo"/>
+        <DatePicker
+            android:id="@+id/pickerResFechaPrestamo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:datePickerMode="spinner"
+            android:spinnersShown="true"
+            android:calendarViewShown="false"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha de Entrega"/>
+        <DatePicker
+            android:id="@+id/pickerResFechaEntrega"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:datePickerMode="spinner"
+            android:spinnersShown="true"
+            android:calendarViewShown="false"/>
+
+        <Button
+            android:id="@+id/btnResReservar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="reservar"
+            android:text="Reservar"
+            android:layout_gravity="center"/>
+
+
+    </LinearLayout>
+
+</ScrollView>
