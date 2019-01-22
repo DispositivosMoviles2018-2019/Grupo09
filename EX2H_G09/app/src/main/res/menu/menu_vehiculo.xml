@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nuevoItem"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="Nuevo"></item>
+    <item android:id="@+id/configItem"
+        android:title="Configuraciones"></item>
+    <item android:id="@+id/findItem"
+    android:title="Buscar"></item>
+    <item android:id="@+id/respaldoMenu"
+        android:title="Respaldar Datos"></item>
+</menu>
